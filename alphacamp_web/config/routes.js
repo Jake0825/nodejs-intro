@@ -35,9 +35,7 @@ module.exports.routes = {
   '/': {
     view: 'homepage'
   },
-  '/view/todo/': {
-    view: 'todoList'
-  }
+  '/view/todo/': 'TodoController.getTodoList',
 
   /***************************************************************************
   *                                                                          *

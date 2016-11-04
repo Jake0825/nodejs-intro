@@ -6,6 +6,12 @@
  */
 
 module.exports = {
-	
+  getTodoList: (req, res) => {
+    Todo.find().sort('createdAt desc').then(todos => {
+      return res.render('todoList', { todos: todos })
+    }).catch(err => {
+      sails.log.error(err)
+      return res.serverError()
+    })
+  }
 };
-
