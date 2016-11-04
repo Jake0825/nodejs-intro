@@ -1,3 +1,5 @@
+//- view/todo.jade
+
 html
   head
     link(rel='stylesheet', href='/css/bootstrap.min.css')
@@ -8,8 +10,7 @@ html
     .container
       .row
         .col-lg-offset-4.col-lg-4
-          h4 Todo List
-          for todo in todos
+          h4 #{todo.title}
+          for item in todo.items
             ul
-              li 
-                a(href='#{todo.id}') #{todo.title}
+              li #{item.note}

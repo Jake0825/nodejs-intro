@@ -13,5 +13,13 @@ module.exports = {
       sails.log.error(err)
       return res.serverError()
     })
+  },
+  getTodo: (req, res) => {
+    Todo.findOne(req.params.id).populateAll().then(todo => {
+      return res.render('todo', { todo: todo })
+    }).catch(err => {
+      sails.log.error(err)
+      return res.serverError()
+    })
   }
 };

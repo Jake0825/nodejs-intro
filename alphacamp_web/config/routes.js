@@ -36,6 +36,7 @@ module.exports.routes = {
     view: 'homepage'
   },
   '/view/todo/': 'TodoController.getTodoList',
+  '/view/todo/:id': 'TodoController.getTodo'
 
   /***************************************************************************
   *                                                                          *
