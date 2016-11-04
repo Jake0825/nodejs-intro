@@ -6,11 +6,54 @@ html
     link(rel='stylesheet', href='/css/bootstrap-theme.min.css')
     script(src='/js/jquery-3.1.1.min.js')
     script(src='/js/bootstrap.min.js')
+    script(src='/js/vue.min.js')
   body
     .container
       .row
-        .col-lg-offset-4.col-lg-4
-          h4 #{todo.title}
-          for item in todo.items
-            ul
-              li #{item.note}
+        #todo.col-lg-offset-4.col-lg-4
+          ul.list-group
+            li.list-group-item.active {{todo.title}}
+            li.list-group-item(v-for='item in todo.items')
+              | {{item.note}}
+              a.pull-right(href='#', v-on:click='del(item.id)')
+                span.text-danger.glyphicon.glyphicon-remove
+
+          .input-group
+            input.form-control(type='text', placeholder='有什麼要做的就記錄下來吧！', v-model='noteText')
+            span.input-group-btn
+              button.btn.btn-default(type='button', v-on:click='add') 送出
+  script.
+    var todo = new Vue({
+      el: '#todo',
+      data: {
+        todo: {},
+        noteText: ''
+      },
+      created: function () {
+        var self = this
+        $.get('/todo/#{req.params.id}').done(function(todo){
+          self.todo = todo
+        })
+      },
+      methods: {
+        add: function() {
+          if (this.todoText !== '') {
+            var self = this
+            $.post('/todo/#{req.params.id}/items', { note: this.noteText }).done(function(todo){
+              self.todo = todo
+              self.noteText = ''
+            })
+          }
+        },
+        del: function(id) {
+          var self = this
+          $.ajax({
+            url: `/todo/#{req.params.id}/items/${id}`,
+            type: 'DELETE',
+            success: function(todo) {
+              self.todo = todo
+            }
+          })
+        }
+      }
+    })
