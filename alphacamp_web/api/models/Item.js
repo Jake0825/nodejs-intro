@@ -1,5 +1,5 @@
 /**
- * Todo.js
+ * Item.js
  *
  * @description :: TODO: You might write a short summary of how this model works and what it represents here.
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
@@ -14,12 +14,11 @@ module.exports = {
       unique: true,
       autoIncrement: true
     },
-    title: {
+    note: {
       type: 'string'
     },
-    items: {
-      collection: 'item',
-      via: 'todo'
+    todo: {
+      model: 'todo'
     }
   }
 };
